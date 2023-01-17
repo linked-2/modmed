@@ -15,14 +15,15 @@ let theAccountID2 = '';
 let rI = '';
 let cases = [];
 let pagePass = false;
+let recordSize = 0;
 export default class ModmedKeckeis extends LightningElement {
 
     @api recordId;
     columns = COLS;
     pageRecordId;
-    cases;
-    //rI = this.theAccountId;
-    theAccountId2 = theAccountId;
+    
+    //cases;
+
     //@wire(getCases, {accountId: theAccountId})
     //@wire(getCases, {accountId: recordId})
     
@@ -31,26 +32,48 @@ export default class ModmedKeckeis extends LightningElement {
         .then((result)=>{
             console.log('result ==> ', result);
             if(!pagePass){
+                this.cases = [...result];
                 result.forEach((x)=>{
                     console.log('x => ', x);
-                    cases.push(x);
+                    this.cases.push({x});
                 })
                 pagePass = true;
-                cases.forEach((x)=>{
+                this.cases.forEach((x)=>{
                     console.log('cases(x)', x);
                 });
             }
-            console.log('cases.length ==> ' , cases.length);
-
+            this.recordSize = this.cases.length;
+            console.log('this.cases.length ==> ' , this.cases.length);
+            //this.cases = [...this.cases];
         })
         .catch((error) => {
             this.error = error;
             console.log('error ==> ', error);
-        });            
+        });   
+        this.recordSize = this.cases.length;
+        console.log('        // this.recordSize = this.cases.length;', this.cases.length);
+        this.cases = [...this.cases];         
+        console.log('after clone ==> ', this.cases.length);
+    }
+    async connectedCallback(){
+        this.pageRecordId = this.recordId;
+        console.log('before getData');
+        await this.getData();
+        console.log('after getData');
+        //this.cases = [...this.cases];     
+        //console.log('in connectedCallback this.cases.length ==> ', this.cases.length);
+        // this.cases = [...this.cases];
+        console.log('connected callback cases', JSON.stringify(this.cases));
+        // JSON.stringify(this.cases).forEach((y)=>{
+        //     console.log('y = >' , y);
+        // })
+        console.log('connected callback non stringify cases', this.cases);
     }
     renderedCallback(){
-        this.pageRecordId = this.recordId;
-        this.getData();
+        //this.cases = [...this.cases];
+        // this.recordSize = this.cases.length;
+        // //console.log('this.recordSize ==> ', this.cases.length);
+        // //this.cases = {...this.cases};
     }
 }
 

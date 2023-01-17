@@ -1,8 +1,12 @@
 <template>
     <lightning-card>
         <h1>Record Id : {pageRecordId}</h1> <br>
+        <h1>recordSize is: {recordSize}</h1><br>
+        <div for:each={cases} for:item="listVariable" key={listVariable.id}>
+            listVariable.id
+        </div>
         <lightning-datatable
-            key-field="id"
+            key-field="Id"
             data={cases}
             columns={columns}
         > 
