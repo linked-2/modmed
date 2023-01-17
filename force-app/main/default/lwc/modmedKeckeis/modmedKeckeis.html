@@ -1,11 +1,11 @@
 <template>
     <lightning-card>
-        <h1>Record Id : {theAccountId}</h1> <br>
+        <h1>Record Id : {pageRecordId}</h1> <br>
         <lightning-datatable
             key-field="id"
-            data={cases.data}
+            data={cases}
             columns={columns}
-        >
+        > 
         </lightning-datatable>
     </lightning-card>
 </template>
